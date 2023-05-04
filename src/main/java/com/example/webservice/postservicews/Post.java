@@ -31,15 +31,11 @@ public class Post {
             this("default", "userId", null);
         }
 
-        public Post(String text, String userId) {
-            this(text, userId, null);
-        }
-
         @BsonCreator
-        public Post(String text, String userId, String parentId) {
+        public Post(String text, String userId, String authorId) {
             this.text = text;
             this.userId = userId;
-            this.authorId = parentId;
+            this.authorId = authorId;
         }
 
         public String getId() {
