@@ -8,8 +8,8 @@ public class NewMessageDTO {
         @NotNull(message = "Text cannot be empty")
         private String text;
         @NotNull(message = "User ID cannot be empty")
-        private String userId;
-        private String parentId;
+        private String sender;
+        private String receiver;
 
     public String getId() {
         return id;
@@ -27,19 +27,19 @@ public class NewMessageDTO {
         this.text = text;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getSender() {
+        return sender;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getParentId() {
-        return parentId;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setParentId(String fromUserId) {
-        this.parentId = parentId;
+    public void setReceiver(String fromRecieverId) {
+        this.receiver = receiver;
     }
 }

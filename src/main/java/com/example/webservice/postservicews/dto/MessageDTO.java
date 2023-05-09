@@ -6,8 +6,8 @@ import lombok.Data;
 public class MessageDTO {
     private String id;
     private String text;
-    private String parentId;
-    private String userId;
+    private String receiver;
+    private String sender;
 
     public String getId() {
         return id;
@@ -25,19 +25,19 @@ public class MessageDTO {
         this.text = text;
     }
 
-    public String getParentId() {
-        return parentId;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getSender() {
+        return sender;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 }

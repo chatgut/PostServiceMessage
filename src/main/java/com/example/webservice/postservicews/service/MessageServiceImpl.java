@@ -24,8 +24,8 @@ private MessageRepository messageRepository;
     }
 
     @Override
-    public List<Message> getMessages(String userId, String parentId) {
-        return messageRepository.findByUserIdAndParentIdOrderByDatetimeDesc(userId, parentId);
+    public List<Message> getMessages(String sender, String receiver) {
+        return messageRepository.findBySenderAndReceiver(sender, receiver);
     }
 
 
@@ -37,8 +37,8 @@ private MessageRepository messageRepository;
     @Override
     public MessageDTO save(NewMessageDTO newMessageDTO) {
         Message message = new Message();
-        message.setUserId(newMessageDTO.getId());
-        message.setParentId(newMessageDTO.getParentId());
+        message.setSender(newMessageDTO.getId());
+        message.setReceiver(newMessageDTO.getReceiver());
         message.setText(newMessageDTO.getText());
 
 
@@ -52,8 +52,8 @@ private MessageRepository messageRepository;
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setId(message.getId());
         messageDTO.setText(message.getText());
-        messageDTO.setUserId(message.getUserId());
-        messageDTO.setParentId(message.getParentId());
+        messageDTO.setSender(message.getSender());
+        messageDTO.setReceiver(message.getReceiver());
         return messageDTO;
     }
 

@@ -14,10 +14,10 @@ public class Message {
     @Id
     private String id;
 
-    private String userId;
+    private String sender;
 
 
-    private String parentId;
+    private String receiver;
 
 
     private String text;
@@ -27,23 +27,23 @@ public class Message {
     private boolean isRead;
 
     public Message () {
-        this("default", "userId", null, LocalDateTime.now(), false);
+        this("default", "sender", null, LocalDateTime.now(), false);
     }
 
     public Message(String text,
-                    String userId, Object o, LocalDateTime now, boolean b) {
-        this(text, userId, null, LocalDateTime.now(), false);
+                    String sender, Object o, LocalDateTime now, boolean b) {
+        this(text, sender, null, LocalDateTime.now(), false);
     }
 
     @BsonCreator
     public Message(String text,
-                    String userId,
+                    String sender,
                      String parentId,
                    LocalDateTime datetime, boolean isRead) {
         this.text = text;
-        this.userId = userId;
-        this.parentId = parentId;
-        this.datetime = datetime;
+        this.sender = sender;
+        this.receiver = parentId;
+        this.datetime = datetime != null ? datetime : LocalDateTime.now();
         this.isRead = isRead;
     }
 
@@ -56,22 +56,22 @@ public class Message {
         return this;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getSender() {
+        return sender;
     }
 
-    public Message setUserId(@NonNull String userId) {
-        this.userId = userId;
+    public Message setSender(@NonNull String sender) {
+        this.sender = sender;
         return this;
     }
 
     @Nullable
-    public String getParentId() {
-        return parentId;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public Message setParentId(@Nullable String parentId) {
-        this.parentId = parentId;
+    public Message setReceiver(@Nullable String receiver) {
+        this.receiver = receiver;
         return this;
     }
 
@@ -90,7 +90,7 @@ public class Message {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Message message)) return false;
-        return text.equals(message.text) && userId.equals(message.userId) && Objects.equals(parentId, message.parentId);
+        return text.equals(message.text) && sender.equals(message.sender) && Objects.equals(receiver, message.receiver);
     }
 
     public LocalDateTime getDatetime() {
@@ -111,7 +111,7 @@ public class Message {
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, userId, parentId);
+        return Objects.hash(text, sender, receiver);
     }
 }
 

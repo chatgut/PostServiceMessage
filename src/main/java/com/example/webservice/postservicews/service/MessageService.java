@@ -11,7 +11,7 @@ import java.util.List;
 public interface MessageService {
     void save(Message message);
 
-    List<Message> getMessages(String userId, String parentId);
+    List<Message> getMessages(String sender, String receiver);
 
     MessageDTO findById(String id);
 
