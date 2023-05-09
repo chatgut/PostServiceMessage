@@ -3,10 +3,10 @@ package com.example.webservice.postservicews.dto;
 import lombok.Data;
 
 @Data
-public class PostDTO {
+public class MessageDTO {
     private String id;
     private String text;
-    private String authorId;
+    private String parentId;
     private String userId;
 
     public String getId() {
@@ -25,12 +25,12 @@ public class PostDTO {
         this.text = text;
     }
 
-    public String getAuthorId() {
-        return authorId;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     public String getUserId() {

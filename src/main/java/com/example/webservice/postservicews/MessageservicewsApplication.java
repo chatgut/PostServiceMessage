@@ -1,6 +1,9 @@
 package com.example.webservice.postservicews;
 
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +13,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableMongoRepositories
-public class PostservicewsApplication {
+public class MessageservicewsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PostservicewsApplication.class, args);
+        SpringApplication.run(MessageservicewsApplication.class, args);
         System.out.println("Hello");
     }
 
@@ -21,7 +24,4 @@ public class PostservicewsApplication {
     public Jackson2ObjectMapperBuilderCustomizer customizer(){
         return builder -> builder.serializerByType(ObjectId.class, new ToStringSerializer());
     }
-
-
-
 }

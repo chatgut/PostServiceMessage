@@ -1,22 +1,21 @@
 package com.example.webservice.postservicews.service;
 
-import com.example.webservice.postservicews.repository.MessageRepository;
-import org.aspectj.bridge.Message;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.webservice.postservicews.Message;
+import com.example.webservice.postservicews.dto.MessageDTO;
+import com.example.webservice.postservicews.dto.NewMessageDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MessageService {
-    @Autowired
-    private MessageRepository messageRepository;
+public interface MessageService {
+    void save(Message message);
 
-    public void saveMessage(Message message) {
-        messageRepository.save(message);
-    }
+    List<Message> getMessages(String userId, String parentId);
 
-    public List<Message> getMessages(String toUserId, String fromUserId) {
-        return messageRepository.findByMessage(toUserId, fromUserId);
-    }
+    MessageDTO findById(String id);
+
+    MessageDTO save(NewMessageDTO newMessageDTO);
+
+
 }

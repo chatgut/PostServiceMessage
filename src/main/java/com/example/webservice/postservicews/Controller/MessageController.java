@@ -1,25 +1,49 @@
 package com.example.webservice.postservicews.Controller;
 
+import com.example.webservice.postservicews.Message;
+import com.example.webservice.postservicews.dto.MessageDTO;
+import com.example.webservice.postservicews.dto.NewMessageDTO;
+import com.example.webservice.postservicews.repository.MessageRepository;
 import com.example.webservice.postservicews.service.MessageService;
-import org.aspectj.bridge.Message;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/messages")
 public class MessageController {
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+    private final MessageRepository messageRepository;
 
-    @PostMapping("/messages")
-    public void postMessage(@RequestBody Message message) {
-        messageService.saveMessage(message);
+    public MessageController(MessageService messageService, MessageRepository messageRepository) {
+        this.messageService = messageService;
+        this.messageRepository = messageRepository;
     }
 
-    @GetMapping("/messages")
-    public List<Message> getMessages(@RequestParam String toUserId, @RequestParam String fromUserId) {
-        return messageService.getMessages(toUserId, fromUserId);
+    @GetMapping
+    List<Message> getMessages() {
+        return messageRepository.findAll();
     }
+
+    @PostMapping
+    void addMessage(@RequestBody Message message) {
+        messageRepository.save(message);
+    }
+
+
+/*    @PostMapping
+    public ResponseEntity<MessageDTO> createPost(@Valid @RequestBody NewMessageDTO newMessageDTO) {
+        MessageDTO savedMessage = messageService.save(newMessageDTO);
+        return new ResponseEntity<>(savedMessage, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<MessageDTO> getPostById(@PathVariable String id) {
+        MessageDTO messageDTO = messageService.findById(id);
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+    }*/
 
 }
