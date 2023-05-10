@@ -1,8 +1,13 @@
 package com.example.webservice.postservicews.dto;
 
+import jakarta.persistence.Entity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class MessageDTO {
     private String id;
     private String text;
@@ -13,31 +18,4 @@ public class MessageDTO {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
 }

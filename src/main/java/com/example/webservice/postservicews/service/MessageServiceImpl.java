@@ -23,9 +23,14 @@ private MessageRepository messageRepository;
         messageRepository.save(message);
     }
 
+
     @Override
     public List<Message> getMessages(String sender, String receiver) {
         return messageRepository.findBySenderAndReceiver(sender, receiver);
+    }
+
+    public void deleteMessage(String id) {
+        messageRepository.deleteById(id);
     }
 
 

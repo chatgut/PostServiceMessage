@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface MessageService {
+    
     void save(Message message);
 
     List<Message> getMessages(String sender, String receiver);
@@ -18,4 +19,5 @@ public interface MessageService {
     MessageDTO save(NewMessageDTO newMessageDTO);
 
 
+    void deleteMessage(String id);
 }

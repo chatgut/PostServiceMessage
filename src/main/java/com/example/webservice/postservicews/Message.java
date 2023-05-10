@@ -1,7 +1,9 @@
 package com.example.webservice.postservicews;
 
 import com.mongodb.lang.Nullable;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Document("messages")
+@Getter
+@Setter
 public class Message {
     @Id
     private String id;
@@ -47,19 +51,6 @@ public class Message {
         this.isRead = isRead;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Message setId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
     public Message setSender(@NonNull String sender) {
         this.sender = sender;
         return this;
@@ -91,22 +82,6 @@ public class Message {
         if (this == o) return true;
         if (!(o instanceof Message message)) return false;
         return text.equals(message.text) && sender.equals(message.sender) && Objects.equals(receiver, message.receiver);
-    }
-
-    public LocalDateTime getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(LocalDateTime datetime) {
-        this.datetime = datetime;
-    }
-
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
     }
 
     @Override

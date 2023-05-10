@@ -34,6 +34,13 @@ public class MessageController {
         messageRepository.save(message);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMessage(@PathVariable String id) {
+        messageService.deleteMessage(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 /*    @PostMapping
     public ResponseEntity<MessageDTO> createPost(@Valid @RequestBody NewMessageDTO newMessageDTO) {
