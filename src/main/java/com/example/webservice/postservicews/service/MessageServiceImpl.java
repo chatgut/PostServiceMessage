@@ -60,7 +60,6 @@ private final MessageRepository messageRepository;
         messageDTO.setText(message.getText());
         messageDTO.setUserID(message.getUserID());
         messageDTO.setReceiver(message.getReceiver());
-        messageDTO.setCreated(getCreated(message.getId()));
         return messageDTO;
     }
 

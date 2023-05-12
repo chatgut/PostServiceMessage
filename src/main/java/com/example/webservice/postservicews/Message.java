@@ -17,35 +17,33 @@ import java.util.Objects;
 public class Message {
     @Id
     private String id;
-
     private String userID;
-
-
     private String receiver;
-
-
     private String text;
     private boolean isRead;
+    private LocalDateTime dateTime;
 
     public Message () {
-        this("default", "sender", null);
+        this("default", "userID", null, LocalDateTime.now());
     }
 
-    public Message(String id, String text, String sender, String receiver) {
+    public Message(String id, String text, String userID, String receiver, LocalDateTime dateTime) {
         this.id = id;
         this.text = text;
-        this.userID = sender;
+        this.userID = userID;
         this.receiver = receiver;
+        this.dateTime = dateTime;
 
     }
 
     @BsonCreator
     public Message(String text,
                     String userID,
-                     String receiver) {
+                     String receiver, LocalDateTime dateTime) {
         this.text = text;
         this.userID = userID;
         this.receiver = receiver;
+        this.dateTime = dateTime;
 
     }
 

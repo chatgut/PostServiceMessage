@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -14,6 +15,6 @@ public class MessageDTO {
     private String text;
     private String receiver;
     private String userID;
-    private Date created;
+    private LocalDateTime dateTime;
 
 }
