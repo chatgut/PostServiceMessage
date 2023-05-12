@@ -18,41 +18,39 @@ public class Message {
     @Id
     private String id;
 
-    private String sender;
+    private String userID;
 
 
     private String receiver;
 
 
     private String text;
-
-    private LocalDateTime datetime;
-
     private boolean isRead;
 
     public Message () {
-        this("default", "sender", null, LocalDateTime.now(), false);
+        this("default", "sender", null);
     }
 
-    public Message(String text,
-                    String sender, Object o, LocalDateTime now, boolean b) {
-        this(text, sender, null, LocalDateTime.now(), false);
+    public Message(String id, String text, String sender, String receiver) {
+        this.id = id;
+        this.text = text;
+        this.userID = sender;
+        this.receiver = receiver;
+
     }
 
     @BsonCreator
     public Message(String text,
-                    String sender,
-                     String parentId,
-                   LocalDateTime datetime, boolean isRead) {
+                    String userID,
+                     String receiver) {
         this.text = text;
-        this.sender = sender;
-        this.receiver = parentId;
-        this.datetime = datetime != null ? datetime : LocalDateTime.now();
-        this.isRead = isRead;
+        this.userID = userID;
+        this.receiver = receiver;
+
     }
 
-    public Message setSender(@NonNull String sender) {
-        this.sender = sender;
+    public Message setUserID(@NonNull String userID) {
+        this.userID = userID;
         return this;
     }
 
@@ -81,12 +79,12 @@ public class Message {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Message message)) return false;
-        return text.equals(message.text) && sender.equals(message.sender) && Objects.equals(receiver, message.receiver);
+        return text.equals(message.text) && userID.equals(message.userID) && Objects.equals(receiver, message.receiver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, sender, receiver);
+        return Objects.hash(text, userID, receiver);
     }
 }
 

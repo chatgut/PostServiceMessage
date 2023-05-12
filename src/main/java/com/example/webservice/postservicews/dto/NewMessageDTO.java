@@ -13,7 +13,7 @@ public class NewMessageDTO {
         @NotNull(message = "Text cannot be empty")
         private String text;
         @NotNull(message = "User ID cannot be empty")
-        private String sender;
+        private String userID;
         private String receiver;
 
 }
