@@ -46,19 +46,4 @@ public class MessageController {
         messageService.deleteMessage(id);
         return ResponseEntity.ok().build();
     }
-
-
-
-/*    @PostMapping
-    public ResponseEntity<MessageDTO> createPost(@Valid @RequestBody NewMessageDTO newMessageDTO) {
-        MessageDTO savedMessage = messageService.save(newMessageDTO);
-        return new ResponseEntity<>(savedMessage, HttpStatus.CREATED);
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<MessageDTO> getPostById(@PathVariable String id) {
-        MessageDTO messageDTO = messageService.findById(id);
-        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
-    }*/
-
 }

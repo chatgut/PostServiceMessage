@@ -7,8 +7,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
@@ -17,13 +15,6 @@ public class MessageservicewsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MessageservicewsApplication.class, args);
-        System.out.println("Hello");
+        System.out.println("Running");
     }
-
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer customizer(){
-        return builder -> builder.serializerByType(ObjectId.class, new ToStringSerializer());
-    }
-
-    
 }
