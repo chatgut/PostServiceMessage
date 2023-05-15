@@ -1,14 +1,12 @@
 package com.example.webservice.postservicews.Controller;
-
-import com.example.webservice.postservicews.Message;
 import com.example.webservice.postservicews.dto.MessageDTO;
+import com.example.webservice.postservicews.dto.NewMessageDTO;
 import com.example.webservice.postservicews.repository.MessageRepository;
 import com.example.webservice.postservicews.service.MessageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,9 +22,11 @@ public class MessageController {
     }
 
     @GetMapping
-    List<Message> getMessages() {
-        return messageRepository.findAll();
+    public ResponseEntity<List<MessageDTO>> getAllMessages() {
+        List<MessageDTO> messageDTOList = messageService.getAllMessages();
+        return ResponseEntity.ok(messageDTOList);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMessage(@PathVariable String id) {
@@ -34,7 +34,7 @@ public class MessageController {
         return ResponseEntity.ok().build();
     }
     @PostMapping
-    public ResponseEntity<MessageDTO> createPost(@RequestBody Message newMessageDTO) {
+    public ResponseEntity<MessageDTO> addMessage(@RequestBody NewMessageDTO newMessageDTO) {
         MessageDTO savedMessage = messageService.save(newMessageDTO);
         return new ResponseEntity<>(savedMessage, HttpStatus.CREATED);
     }

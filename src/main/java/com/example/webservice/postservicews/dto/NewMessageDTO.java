@@ -1,13 +1,8 @@
 package com.example.webservice.postservicews.dto;
-
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
-
-
 @Getter
 @Setter
 public class NewMessageDTO {
@@ -19,5 +14,4 @@ public class NewMessageDTO {
         private String receiver;
 
         private LocalDateTime dateTime;
-
 }

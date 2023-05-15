@@ -1,6 +1,7 @@
 package com.example.webservice.postservicews.service;
 
 import com.example.webservice.postservicews.dto.MessageDTO;
+import com.example.webservice.postservicews.dto.NewMessageDTO;
 import com.example.webservice.postservicews.exception.MessageNotFoundException;
 import com.example.webservice.postservicews.repository.MessageRepository;
 import com.example.webservice.postservicews.Message;
@@ -13,6 +14,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -22,14 +24,14 @@ private final MessageRepository messageRepository;
     MessageServiceImpl (MessageRepository messageRepository){
         this.messageRepository = messageRepository;
     }
-
     @Override
-    public MessageDTO save(Message newMessageDTO) {
+    public MessageDTO save(NewMessageDTO newMessageDTO) {
         Message message = new Message();
         message.setText(newMessageDTO.getText());
         message.setUserID(newMessageDTO.getUserID());
         message.setReceiver(newMessageDTO.getReceiver());
         message = messageRepository.save(message);
+
 
         return getMessageDTO(message);
     }
@@ -39,19 +41,11 @@ private final MessageRepository messageRepository;
     }
 
     @Override
-    public MessageDTO findById(String id) {
-        Optional<Message> optionalMessage = messageRepository.findById(id);
-        if (optionalMessage.isPresent()) {
-            Message message = optionalMessage.get();
-            return getMessageDTO(message);
-        } else {
-            throw new MessageNotFoundException("Message not found with id " + id);
-        }
-    }
-
-    private Date getCreated(String id) {
-        var mongoId = new ObjectId(id);
-        return mongoId.getDate();
+    public List<MessageDTO> getAllMessages() {
+        List<Message> messageList = messageRepository.findAll();
+        return messageList.stream()
+                .map(this::getMessageDTO)
+                .collect(Collectors.toList());
     }
 
     private MessageDTO getMessageDTO(Message message) {
@@ -60,6 +54,7 @@ private final MessageRepository messageRepository;
         messageDTO.setText(message.getText());
         messageDTO.setUserID(message.getUserID());
         messageDTO.setReceiver(message.getReceiver());
+        messageDTO.setDateTime(message.getDateTime());
         return messageDTO;
     }
 
