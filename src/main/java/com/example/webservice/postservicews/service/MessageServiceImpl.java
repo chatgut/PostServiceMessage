@@ -36,8 +36,14 @@ private final MessageRepository messageRepository;
         return getMessageDTO(message);
     }
 
-    public void deleteMessage(String id) {
-        messageRepository.deleteById(id);
+    public boolean deleteMessage(String id) {
+        Optional<Message> optionalMessage = messageRepository.findById(id);
+        if (optionalMessage.isPresent()) {
+           messageRepository.deleteById(id);
+           return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

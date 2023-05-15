@@ -13,5 +13,5 @@ public interface MessageService {
     MessageDTO save(NewMessageDTO newMessageDTO);
 
 
-    void deleteMessage(String id);
+    boolean deleteMessage(String id);
 }
