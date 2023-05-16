@@ -43,17 +43,11 @@ public class MessageControllerTest {
         // Create a new message
         NewMessageDTO newMessageDTO = new NewMessageDTO();
         newMessageDTO.setText("Hello");
-        newMessageDTO.setUserID("user1");
-        newMessageDTO.setReceiver("user2");
-
-        // Save the message
+        newMessageDTO.setUserID("tester1");
+        newMessageDTO.setReceiver("tester2");
         MessageDTO savedMessage = messageService.save(newMessageDTO);
-
-        // Delete the message
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/messages/{id}", savedMessage.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-
-        // Verify that the message is deleted by trying to fetch it
         mockMvc.perform(MockMvcRequestBuilders.get("/api/messages/{id}", savedMessage.getId()))
                 .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed());
     }
