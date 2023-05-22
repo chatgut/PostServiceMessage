@@ -7,11 +7,16 @@ import com.example.webservice.postservicews.service.MessageService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontProperties;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,8 +24,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource(locations = "classpath:application-integrationtest.properties")
+@TestPropertySource("/application-integrationtest.properties")
 public class MessageControllerTest {
+
 
     @Autowired
     MessageService messageService;
@@ -28,8 +34,6 @@ public class MessageControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private MessageRepository repository;
 
     @Test
     void getAllMessages() throws Exception {
@@ -37,10 +41,8 @@ public class MessageControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-
     @Test
     void deleteMessage() throws Exception {
-        // Create a new message
         NewMessageDTO newMessageDTO = new NewMessageDTO();
         newMessageDTO.setText("Hello");
         newMessageDTO.setUserID("tester1");
@@ -51,7 +53,6 @@ public class MessageControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/messages/{id}", savedMessage.getId()))
                 .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed());
     }
-
     @Test
     void addMessageAndCheckIfStatus201isReturned() throws Exception {
         String requestBody = "{\"text\": \"Goddag\", \"userID\": \"tester1\", \"receiver\": \"tester2\"}";

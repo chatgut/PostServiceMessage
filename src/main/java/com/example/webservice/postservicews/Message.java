@@ -15,7 +15,6 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Message {
-    @Id
     private String id;
     private String userID;
     private String receiver;

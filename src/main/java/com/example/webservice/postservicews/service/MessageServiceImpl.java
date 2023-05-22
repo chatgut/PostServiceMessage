@@ -14,9 +14,11 @@ import java.util.stream.Collectors;
 public class MessageServiceImpl implements MessageService {
 private final MessageRepository messageRepository;
 
+
     @Autowired
-    MessageServiceImpl (MessageRepository messageRepository){
+        MessageServiceImpl (MessageRepository messageRepository){
         this.messageRepository = messageRepository;
+
     }
     @Override
     public MessageDTO save(NewMessageDTO newMessageDTO) {
