@@ -1,5 +1,6 @@
 package com.example.webservice.postservicews;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.NonNull;
@@ -9,36 +10,30 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Document("messages")
 @Getter
 @Setter
 public class Message {
+    @Id
     private String id;
     private String userID;
     private String receiver;
     private String text;
     private boolean isRead;
+
     private LocalDateTime dateTime;
 
-    public Message () {
+    public Message() {
         this("default", "userID", null, LocalDateTime.now());
-    }
-
-    public Message(String id, String text, String userID, String receiver, LocalDateTime dateTime) {
-        this.id = id;
-        this.text = text;
-        this.userID = userID;
-        this.receiver = receiver;
-        this.dateTime = dateTime;
-
     }
 
     @BsonCreator
     public Message(String text,
-                    String userID,
-                     String receiver, LocalDateTime dateTime) {
+                   String userID,
+                   String receiver, LocalDateTime dateTime) {
         this.text = text;
         this.userID = userID;
         this.receiver = receiver;
@@ -82,6 +77,18 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(text, userID, receiver);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id='" + id + '\'' +
+                ", userID='" + userID + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", text='" + text + '\'' +
+                ", isRead=" + isRead +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }
 
