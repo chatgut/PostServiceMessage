@@ -1,4 +1,6 @@
 package com.example.webservice.postservicews.dto;
+import com.example.webservice.postservicews.LocalDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,7 @@ public class MessageDTO {
     private String text;
     private String receiver;
     private String userID;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dateTime;
 
 }
