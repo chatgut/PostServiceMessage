@@ -1,5 +1,4 @@
 package com.example.webservice.postservicews.dto;
-import com.example.webservice.postservicews.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.Getter;

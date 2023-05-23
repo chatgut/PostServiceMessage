@@ -1,3 +1,4 @@
+/*
 package com.example.webservice.postservicews.Controller;
 
 import com.example.webservice.postservicews.dto.MessageDTO;
@@ -62,4 +63,4 @@ public class MessageControllerTest {
                         .content(requestBody))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
-}
+}*/

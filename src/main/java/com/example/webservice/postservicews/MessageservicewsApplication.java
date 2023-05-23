@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MessageservicewsApplication {
 
     public static void main(String[] args) {
-        System.setProperty("spring.main.allow-bean-definition-overriding", "true");
+       // System.setProperty("spring.main.allow-bean-definition-overriding", "true");
         SpringApplication.run(MessageservicewsApplication.class, args);
         System.out.println("Running");
     }

@@ -1,3 +1,4 @@
+/*
 package com.example.webservice.postservicews;
 
 import org.springframework.context.annotation.Configuration;
@@ -25,3 +26,4 @@ public class MessageConfiguration implements WebFluxConfigurer {
                 .maxAge(3600);
     }
 }
+*/

@@ -1,4 +1,4 @@
-package com.example.webservice.postservicews;
+package com.example.webservice.postservicews.dto;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
