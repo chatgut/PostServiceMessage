@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Setter
 public class MessageDTO {
     private String id;
-    private String text;
-    private String receiver;
-    private String userID;
+    private String message;
+    private String to;
+    private String from;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime dateTime;
+    private LocalDateTime date;
 
 }

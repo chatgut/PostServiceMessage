@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 public class NewMessageDTO {
         private String id;
         @NotNull(message = "Text cannot be empty")
-        private String text;
+        private String message;
         @NotNull(message = "User ID cannot be empty")
-        private String userID;
-        private String receiver;
+        private String from;
+        private String to;
 
-        private LocalDateTime dateTime;
+        private LocalDateTime date;
 }

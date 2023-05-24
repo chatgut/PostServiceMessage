@@ -7,4 +7,5 @@ RUN mvn clean package
 FROM eclipse-temurin:19-jre-alpine
 COPY --from=build /app/target/postservicews-0.0.1-SNAPSHOT.jar /app/
 EXPOSE 8000
+ENV PORT 8080
 ENTRYPOINT ["java", "-jar", "/app/postservicews-0.0.1-SNAPSHOT.jar"]

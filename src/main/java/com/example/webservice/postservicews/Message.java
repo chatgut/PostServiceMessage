@@ -17,76 +17,65 @@ import java.util.Objects;
 public class Message {
     @Id
     private String id;
-    private String userID;
-    private String receiver;
-    private String text;
+    private String from;
+    private String to;
+    private String message;
     private boolean isRead;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime date;
 
     public Message() {
         this("default", "userID", null, LocalDateTime.now());
     }
 
     @BsonCreator
-    public Message(String text,
-                   String userID,
-                   String receiver, LocalDateTime dateTime) {
-        this.text = text;
-        this.userID = userID;
-        this.receiver = receiver;
-        this.dateTime = dateTime;
+    public Message(String message,
+                   String to,
+                   String from, LocalDateTime date) {
+        this.message = message;
+        this.from = from;
+        this.to = to;
+        this.date = date;
 
     }
 
-    public Message setUserID(@NonNull String userID) {
-        this.userID = userID;
-        return this;
+    public String getId() {
+        return id;
     }
 
-    @Nullable
-    public String getReceiver() {
-        return receiver;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Message setReceiver(@Nullable String receiver) {
-        this.receiver = receiver;
-        return this;
+    public String getFrom() {
+        return from;
     }
 
-    @NonNull
-    public String getText() {
-        return text;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public Message setText(@NonNull String text) {
-        this.text = text;
-        return this;
+    public String getTo() {
+        return to;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Message message)) return false;
-        return text.equals(message.text) && userID.equals(message.userID) && Objects.equals(receiver, message.receiver);
+    public void setTo(String to) {
+        this.to = to;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(text, userID, receiver);
+    public boolean isRead() {
+        return isRead;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id='" + id + '\'' +
-                ", userID='" + userID + '\'' +
-                ", receiver='" + receiver + '\'' +
-                ", text='" + text + '\'' +
-                ", isRead=" + isRead +
-                ", dateTime=" + dateTime +
-                '}';
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }
-

@@ -5,6 +5,9 @@ import com.example.webservice.postservicews.dto.NewMessageDTO;
 import com.example.webservice.postservicews.repository.MessageRepository;
 import com.example.webservice.postservicews.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +26,9 @@ private final MessageRepository messageRepository;
     @Override
     public MessageDTO save(NewMessageDTO newMessageDTO) {
         Message message = new Message();
-        message.setText(newMessageDTO.getText());
-        message.setUserID(newMessageDTO.getUserID());
-        message.setReceiver(newMessageDTO.getReceiver());
+        message.setMessage(newMessageDTO.getMessage());
+        message.setFrom(newMessageDTO.getFrom());
+        message.setTo(newMessageDTO.getTo());
         message = messageRepository.save(message);
 
 
@@ -43,20 +46,19 @@ private final MessageRepository messageRepository;
     }
 
     @Override
-    public List<MessageDTO> getAllMessages() {
-        List<Message> messageList = messageRepository.findAll();
-        return messageList.stream()
-                .map(this::getMessageDTO)
-                .collect(Collectors.toList());
+    public List<MessageDTO> getAllMessages(String from, String to, int page, int nMessages) {
+        Pageable paging = PageRequest.of(page, nMessages, Sort.by("date").descending());
+        List<MessageDTO> fromAndTo = messageRepository.findMessages(from, to, paging).getContent();
+        return fromAndTo;
     }
 
     private MessageDTO getMessageDTO(Message message) {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setId(message.getId());
-        messageDTO.setText(message.getText());
-        messageDTO.setUserID(message.getUserID());
-        messageDTO.setReceiver(message.getReceiver());
-        messageDTO.setDateTime(message.getDateTime());
+        messageDTO.setMessage(message.getMessage());
+        messageDTO.setFrom(message.getFrom());
+        messageDTO.setTo(message.getTo());
+        messageDTO.setDate(message.getDate());
         return messageDTO;
     }
 
