@@ -11,17 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
 private final MessageRepository messageRepository;
-
-
     @Autowired
         MessageServiceImpl (MessageRepository messageRepository){
         this.messageRepository = messageRepository;
-
     }
     @Override
     public MessageDTO save(NewMessageDTO newMessageDTO) {
@@ -61,6 +57,4 @@ private final MessageRepository messageRepository;
         messageDTO.setDate(message.getDate());
         return messageDTO;
     }
-
-
     }

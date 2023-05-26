@@ -6,13 +6,7 @@ import com.example.webservice.postservicews.dto.NewMessageDTO;
 import java.util.List;
 
 public interface MessageService {
-
-
     List<MessageDTO> getAllMessages(String from, String to, int page, int nMessages);
-
-
     MessageDTO save(NewMessageDTO newMessageDTO);
-
-
     boolean deleteMessage(String id);
 }
