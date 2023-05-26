@@ -34,15 +34,9 @@ public class MessageController {
                                                            @RequestParam String to,
                                                            @RequestParam(defaultValue = "0") int page,
                                                            @RequestParam(defaultValue = "10") int nMessages) {
-        /*Pageable paging = PageRequest.of(page, nMessages, Sort.by("date").descending());
-        List<MessageDTO> fromAndTo = messageRepository.findMessages(from, to, paging).getContent();*/
-        /*List<Message> fromandto = messageRepository.findByFromEqualsIgnoreCaseAndToEqualsIgnoreCase(
-                from, to, paging).getContent();*/
        List<MessageDTO> messageDTOList = messageService.getAllMessages(from,to,page,nMessages);
         return messageDTOList;
     }
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMessage(@PathVariable String id) {
         boolean deleted = messageService.deleteMessage(id);

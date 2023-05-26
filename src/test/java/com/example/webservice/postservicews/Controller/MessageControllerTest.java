@@ -1,66 +1,86 @@
-/*
 package com.example.webservice.postservicews.Controller;
 
 import com.example.webservice.postservicews.dto.MessageDTO;
 import com.example.webservice.postservicews.dto.NewMessageDTO;
 import com.example.webservice.postservicews.repository.MessageRepository;
 import com.example.webservice.postservicews.service.MessageService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.MediaType;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import java.util.Arrays;
+import java.util.List;
 
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+class MessageControllerTest {
+    private MessageController messageController;
+    @Captor
+    private ArgumentCaptor<NewMessageDTO> newMessageDTOCaptor;
+    @Captor
+    private ArgumentCaptor<Integer> pageCaptor;
+    @Captor
+    private ArgumentCaptor<String> fromCaptor;
+    @Captor
+    private ArgumentCaptor<String> toCaptor;
+    @Captor
+    private ArgumentCaptor<Integer> nMessagesCaptor;
+    @Mock
+    private MessageService messageService;
+    @Mock
+    private MessageRepository messageRepository;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@TestPropertySource("/application-integrationtest.properties")
-public class MessageControllerTest {
-
-
-    @Autowired
-    MessageService messageService;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-
-    @Test
-    void getAllMessages() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/messages")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        messageController = new MessageController(messageService, messageRepository);
     }
+
     @Test
-    void deleteMessage() throws Exception {
+    void deleteMessageToCheckIfNotFoundIsReturned() {
+        String id = "1";
+        when(messageService.deleteMessage(id)).thenReturn(false);
+        ResponseEntity<?> responseEntity = messageController.deleteMessage(id);
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        verify(messageService, times(1)).deleteMessage(id);
+    }
+
+    @Test
+    void addMessageToCheckIfSaved() {
+        String userID = "user1";
         NewMessageDTO newMessageDTO = new NewMessageDTO();
-        newMessageDTO.setText("Hello");
-        newMessageDTO.setUserID("tester1");
-        newMessageDTO.setReceiver("tester2");
-        MessageDTO savedMessage = messageService.save(newMessageDTO);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/messages/{id}", savedMessage.getId()))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/messages/{id}", savedMessage.getId()))
-                .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed());
+        MessageDTO savedMessage = new MessageDTO();
+        doReturn(savedMessage).when(messageService).save(newMessageDTOCaptor.capture());
+        ResponseEntity<MessageDTO> responseEntity = messageController.addMessage(userID, newMessageDTO);
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(savedMessage, responseEntity.getBody());
+        assertEquals(newMessageDTO, newMessageDTOCaptor.getValue());
     }
-    @Test
-    void addMessageAndCheckIfStatus201isReturned() throws Exception {
-        String requestBody = "{\"text\": \"Goddag\", \"userID\": \"tester1\", \"receiver\": \"tester2\"}";
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/messages")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+    @Test
+    void returnListOfAllMessages() {
+        String from = "user1";
+        String to = "user2";
+        int page = 0;
+        int nMessages = 10;
+        List<MessageDTO> expectedMessages = Arrays.asList(
+                new MessageDTO(),
+                new MessageDTO()
+        );
+        doReturn(expectedMessages).when(messageService).getAllMessages(fromCaptor.capture(), toCaptor.capture(), pageCaptor.capture(), nMessagesCaptor.capture());
+
+        List<MessageDTO> actualMessages = messageController.getAllMessages(from, to, page, nMessages);
+        assertEquals(expectedMessages, actualMessages);
+
+        assertEquals(from, fromCaptor.getValue());
+        assertEquals(to, toCaptor.getValue());
+        assertEquals(page, pageCaptor.getValue());
+        assertEquals(nMessages, nMessagesCaptor.getValue());
     }
-}*/
+}
