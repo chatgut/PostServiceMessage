@@ -9,7 +9,7 @@ services:
     ports:
      - "8002:8002"
     environment:
-       SPRING_DATASOURCE_URL: jdbc:mysql://userservice-mysql:3306/userservice-mysql
+       SPRING_DATASOURCE_URL: jdbc:mysql://userservice-mysql:3307/userservice-mysql
        MYSQL_USER: developer
        MYSQL_PASSWORD: password
 
@@ -22,10 +22,9 @@ services:
     ports:
      - "8003:8080"
     environment:
-      DB_URL: authservice-mysql:3306/authservice-mysql
+      DB_URL: authservice-mysql:3307/authservice-mysql
       DB_USER: developer
       DB_PASS: password
-
   userservice-mysql:
     image: "mysql:latest"
     container_name: userservice-mysql
@@ -39,7 +38,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_HOST: '%'
     ports:
-      - "3306:3306"
+      - "3308:3306"
   authservice-mysql:
       image: 'mysql:latest'
       container_name: authservice-mysql
@@ -53,7 +52,7 @@ services:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_HOST: '%'
       ports:
-        - "3307:3307"
+        - "3309:3307"
 volumes:
     db_mysql3:
     db_mysql2:
