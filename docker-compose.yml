@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+
+  userservice:
+    image: ghcr.io/chatgut/userservice:1.0
+    depends_on:
+         - userservice-mysql
+    container_name: userservice
+    ports:
+     - "8002:8002"
+    environment:
+       SPRING_DATASOURCE_URL: jdbc:mysql://userservice-mysql:3306/userservice-mysql
+       MYSQL_USER: developer
+       MYSQL_PASSWORD: password
+
+
+  authservice:
+    image: ghcr.io/chatgut/authservice2:latest
+    depends_on:
+      - authservice-mysql
+    container_name: authservice
+    ports:
+     - "8003:8080"
+    environment:
+      DB_URL: authservice-mysql:3306/authservice-mysql
+      DB_USER: developer
+      DB_PASS: password
+
+  userservice-mysql:
+    image: "mysql:latest"
+    container_name: userservice-mysql
+    volumes:
+      - db_mysql2:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userservice-mysql
+      MYSQL_USER: developer
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: '%'
+    ports:
+      - "3306:3306"
+  authservice-mysql:
+      image: 'mysql:latest'
+      container_name: authservice-mysql
+      volumes:
+        - db_mysql3:/var/lib/mysql
+      environment:
+        MYSQL_DATABASE: authservice-mysql
+        MYSQL_USER: developer
+        MYSQL_PASSWORD: password
+        MYSQL_ROOT_HOST: '%'
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_HOST: '%'
+      ports:
+        - "3307:3307"
+volumes:
+    db_mysql3:
+    db_mysql2:
+    mongodb_data:
+
